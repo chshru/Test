@@ -1,6 +1,8 @@
 package com.abc.testhandler;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int TEST = 1;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +25,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button).setOnClickListener(this);
         findViewById(R.id.button1).setOnClickListener(this);
         findViewById(R.id.button3).setOnClickListener(this);
+        sp = getSharedPreferences("data", MODE_PRIVATE);
+        editor = sp.edit();
+
+
     }
 
 
@@ -46,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (et.getText().toString().isEmpty()) {
                     return;
                 }
+                editor.putString("key","test");
+                editor.apply();
                 int delay = Integer.valueOf(et.getText().toString());
                 addTextView("send message delay " + delay + " ms");
                 mHandler.sendEmptyMessageDelayed(TEST, delay);
@@ -56,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button3:
                 clearLinearLayout();
+                addTextView(sp.getString("key","empty"));
                 break;
         }
     }
