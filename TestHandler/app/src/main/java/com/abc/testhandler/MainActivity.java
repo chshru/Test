@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (et.getText().toString().isEmpty()) {
                     return;
                 }
-                editor.putString("key","test");
+                editor.putString("key",et.getText().toString());
                 editor.apply();
                 int delay = Integer.valueOf(et.getText().toString());
                 addTextView("send message delay " + delay + " ms");
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button3:
                 clearLinearLayout();
-                addTextView(sp.getString("key","empty"));
+                addTextView("SharedPreferences: " + sp.getString("key","empty"));
                 break;
         }
     }
